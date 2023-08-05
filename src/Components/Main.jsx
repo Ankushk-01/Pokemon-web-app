@@ -8,21 +8,18 @@ const Main =()=>{
     const [pokeData,setPokeData] = useState([]);
     const [loading,setLoading] = useState(true);
     const [url,setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
-
-    const [nextUrl,setNextUrl] = useState();
-    const [priviousUrl,setPriviousUrl] = useState();
-
-
+    const [nextUrl,setNextUrl] = useState("");
+    const [priviousUrl,setPriviousUrl] = useState("");
     async function pokeFun(){
         setLoading(true);
         const res = await axios.get(url);
-        console.log(res.data.results);
+        // console.log(res.data.results);
         setNextUrl(res.data.next);
         setPriviousUrl(res.data.previous);
-        console.log(res.data.next);
-        console.log(res.data.previous);
+        // console.log(res.data.next);
+        // console.log(res.data.previous);
         getPokemon(res.data.results);
-        console.log("pokedata"+pokeData);
+        // console.log("pokedata"+res.data.results.data);
         setLoading(false);
     }
     async function getPokemon(res){
@@ -38,11 +35,12 @@ const Main =()=>{
     useEffect(()=>{
         pokeFun();
     },[url])
+    // console.log(loading);
     return(
         <>
         <div className="container">
             <div className="left-content">
-            <Card/>
+            <Card pokemon={pokeData} pageloading = {loading}/>
             <div className="btn-group">
                 <button>Privious</button>
                 <button>Next</button>
